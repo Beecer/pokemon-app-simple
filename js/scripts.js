@@ -1,4 +1,5 @@
-const pokemonList=[
+let pokemonRepository = (function () {
+  let pokemonList = [
   {
     name: 'Golduck',
     height: 5,
@@ -16,20 +17,25 @@ const pokemonList=[
   }
 ];
 
-//loop lists Pokemon with height attribute
-//for (let i=0; i < pokemonList.length; i++) {
-//  if(pokemonList[i].height > 5) {
-//  document.write(pokemonList[i].name + ' (height: ' + pokemonList[i].height + ')- Wow, that\'s big!)', '<br>');
-//}else {
-//  document.write(pokemonList[i].name + ' (height: ' + pokemonList[i].height + ')','<br>');
-//  }
-//
+  function add(pokemon) {
+    return pokemonList.push(pokemon);
+  }
 
-//pokemonList.forEach(function(pokemon) {
-//  document.write(pokemon.name + ' is ' + pokemon.height + '.');
-//});
+  function getAll() {
+    return pokemonList;
+  }
+
+  return {
+    add: add,
+    getAll: getAll
+  };
+})();
+
+
+pokemonRepository.add({ name: 'Blastoise', height: 4, types: ['rain-dish', 'torrent']});
+
 
 function myLoopFunction(pokemon) {
   document.write(pokemon.name + ' is ' + pokemon.height + '.','<br>','Types: ' + pokemon.types + '.', '<br>','<br>');
 }
-pokemonList.forEach(myLoopFunction);
+pokemonRepository.getAll().forEach(myLoopFunction);
