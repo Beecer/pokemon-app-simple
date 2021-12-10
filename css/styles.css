@@ -4,6 +4,28 @@
 --primary-color: fff;/*white*/
 --background-color: #9de0ce;/*Sea Green*/
 }
+
+.button-class {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 16px;
+  text-align: left;;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #4caf50;
+  width: 33%;
+}
+
+h1{
+  color: green;
+}
 body {
 margin: 20px;
 display: flex;
@@ -12,6 +34,7 @@ font-family: 'Roboto', sans-serif;
 font-weight: 550;
 line-height: 1.6;
 }
+
 .page-header {
   display: flex;
   width: 100%;
@@ -31,7 +54,7 @@ line-height: 1.6;
   flex-grow: 1;
   text-align: left;
 }
-.pokemon_list{
+.pokemon_list_title{
   max-width: 700px;
   margin: 0 auto;
 }
