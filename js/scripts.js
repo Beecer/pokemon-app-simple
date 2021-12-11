@@ -1,31 +1,15 @@
 //IIFE wrap
 let pokemonRepository = (function () {
-  let pokemonList = [
-  {
-    name: 'Golduck',
-    height: 5,
-    types: ['damp', 'cloud-nine', 'swift-swim']
-  },
-  {
-    name: 'Wartorle',
-    height: 6,
-    types: ['rain-dish', 'torrent']
-  },
-  {
-    name: 'Pidgeot',
-    height: 3,
-    types: ['keen-eye', 'tangled-feet', 'big-pecks']
-  }
-];
-
-
+  let pokemonList = [];
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
    function add(pokemon) {
      if (
        typeof pokemon === 'object'&&
      "name" in pokemon &&
-     "height" in pokemon &&
-     "types" in pokemon
+     "detailsUrl" in pokemon
+     //&& "height" in pokemon &&
+     //"types" in pokemon
    ) {
      pokemonList.push(pokemon)
     } else {
@@ -36,7 +20,9 @@ let pokemonRepository = (function () {
     return pokemonList;
   }
   function showDetails(pokemon) {
-    return pokemonList;
+    loadDetails(pokemon).then(function () {
+      console.log(pokemon)
+    });
   }
 
   function addListItem(pokemon) {
@@ -52,23 +38,55 @@ let pokemonRepository = (function () {
     listPokemon.appendChild(button);
     pokemonList.appendChild(listPokemon);
   }
-  
+
+  function loadList() {
+  return fetch(apiUrl).then(function (response) {
+    return response.json();
+  }).then(function (json) {
+    json.results.forEach(function (item) {
+      let pokemon = {
+        name: item.name,
+        detailsUrl: item.url
+      };
+      add(pokemon);
+    });
+  }).catch(function (e) {
+    console.error(e);
+  });
+}
+
+function loadDetails(item) {
+  let url = item.detailsUrl;
+  return fetch(url).then(function (response) {
+    return response.json();
+  }).then(function (details) {
+    // Now we add the details to the item
+    item.imageUrl = details.sprites.front_default;
+    item.height = details.height;
+    item.types = details.types;
+  }).catch(function (e) {
+    console.error(e);
+  });
+}
+
   return {
     add: add,
     getAll: getAll,
     addListItem: addListItem,
-    showDetails: showDetails
+    showDetails: showDetails,
+    loadList: loadList,
+    loadDetails: loadDetails
   };
 })();
 
 
-pokemonRepository.add({ name: 'Blastoise', height: 4, types: ['rain-dish', 'torrent']});
-pokemonRepository.add({name: 6 , height: 4, types: ['rain-dish', 'torrent']});
+//pokemonRepository.add({ name: 'Blastoise', height: 4, types: ['rain-dish', 'torrent']});
+//pokemonRepository.add({name: 6 , height: 4, types: ['rain-dish', 'torrent']});
 
-
-//buttons of each pokemon
-pokemonRepository.getAll().forEach(function (pokemon) {
-  pokemonRepository.addListItem(pokemon);
+pokemonRepository.loadList().then(function() {
+  pokemonRepository.getAll().forEach(function (pokemon) {
+    pokemonRepository.addListItem(pokemon);
+  });
 });
 //log pokemon details in console
 /*
