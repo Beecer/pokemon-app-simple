@@ -3,16 +3,39 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pokedex</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <title>Stadiums App Simple</title>
   </head>
   <body>
     <header class="page-header">
       <!-- add logo here -->
-      <img src="img/808519_cool_emoticon_emotion_nerd_smiley_icon1.svg" alt="A logo, nerdy smiley face with glasses" class="page-header__item">
-      <h1 class="page-header__item">Pokemon List</h1>
+      <img src="img/269px-International_Pokémon_logo.svg.png" alt="Pokemon logo" class="page-header__logo">
     </header>
-    <h1 class="pokemon_list_title">Pokemon</h1>
+
+    <form id='registration-form'>
+      <div class='input-wrapper'>
+        <label for='email'>E-Mail </label>
+        <input id='email'>
+      </div>
+
+      <div class='input-wrapper'>
+        <label for='password'>Password</label>
+        <input id='password' type='password'>
+      </div>
+
+      <button>Register</button>
+    </form>
+    <canvas
+      id='canvas'
+      width='700'
+      height= '100'
+    ></canvas>
+
+    <button id='show-modal'>Show modal</button>
+    <button id='show-dialog'>Show dialog</button>
+    <div id='modal-container'></div>
+
+    <h1 class="pokemon_list_title">PokeDex</h1>
     <ul class="pokemon_list"></ul>
     <script src="js/promise-polyfill.js"></script>
     <script src="js/fetch-polyfill.js"></script>
