@@ -24,7 +24,8 @@ let pokemonRepository = (function () {
   //Load pokemon details
   function showDetails(pokemon) {
     loadDetails(pokemon).then(function () {
-      showModal(pokemon)
+      showModal(pokemon),
+      console.log(pokemon)
     });
   }
 
@@ -45,20 +46,20 @@ let pokemonRepository = (function () {
 
   //Adds name to console
   function loadList() {
-  return fetch(apiUrl).then(function (response) {
-    return response.json();
-  }).then(function (json) {
-    json.results.forEach(function (item) {
-      let pokemon = {
-        name: item.name,
-        detailsUrl: item.url
-      };
-      add(pokemon);
+    return fetch(apiUrl).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      json.results.forEach(function (item) {
+        let pokemon = {
+          name: item.name,
+          detailsUrl: item.url
+        };
+        add(pokemon);
+      });
+    }).catch(function (e) {
+      console.error(e);
     });
-  }).catch(function (e) {
-    console.error(e);
-  });
-  }
+    }
 
   //Adds details to console
   function loadDetails(item) {
@@ -70,6 +71,7 @@ let pokemonRepository = (function () {
       item.imageUrl = details.sprites.front_default;
       item.height = details.height;
       item.types = details.types;
+      item.abilities = details.abilites;
     }).catch(function (e) {
       console.error(e);
     });
@@ -77,7 +79,7 @@ let pokemonRepository = (function () {
 
   //Real time email form validation
   (function() {
-  let form = document.querySelector('#register-form');
+  let form = document.querySelector('#registration-form');
   let emailInput = document.querySelector('#email');
   let passwordInput = document.querySelector('#password');
 
@@ -150,11 +152,11 @@ let pokemonRepository = (function () {
 
   emailInput.addEventListener('input', validateEmail);
   passwordInput.addEventListener('input', validatePassword);
-});
+})();
   //End of form
 
   let modalContainer = document.querySelector('#modal-container');
-  function showModal(title, text) {
+  function showModal(pokemon) {
     // Clear all existing modal content
     modalContainer.innerHTML = '';
     let modal = document.createElement('div');
@@ -168,14 +170,19 @@ let pokemonRepository = (function () {
 
     //add pokemon name here
     let titleElement = document.createElement('h1');
-    titleElement.innerText = 'title';
+    titleElement.innerText = pokemon.name;
     // add pokemon details
     let contentElement = document.createElement('p');
-    contentElement.innerText = 'text';
+    contentElement.innerText = ('Height:' + ' ' + pokemon.height);// redirect this
+
+    // add image here
+    let imageElement = document.createElement('img');
+    imageElement.src = pokemon.imageUrl;
 
     modal.appendChild(closeButtonElement);
     modal.appendChild(titleElement);
     modal.appendChild(contentElement);
+    modal.appendChild(imageElement);
     modalContainer.appendChild(modal);
     modalContainer.classList.add('is-visible');
   }
@@ -254,15 +261,87 @@ let pokemonRepository = (function () {
     });
   });
 
-  // Canvas draw box
-  (function() {
-    let canvas = document.querySelector('#canvas');
-    let isDrawing = false;
-    let previousX = null;
-    let previousY = null;
+  return {
+    add: add,
+    getAll: getAll,
+    addListItem: addListItem,
+    showDetails: showDetails,
+    loadList: loadList,
+    loadDetails: loadDetails,
+    showDetails: showDetails
 
-    function handleStart(e) {
-      isDrawing = true;
+  };
+})();
+
+pokemonRepository.loadList().then(function() {
+  pokemonRepository.getAll().forEach(function (pokemon) {
+    pokemonRepository.addListItem(pokemon);
+  });
+});
+
+(function() {
+  let canvas = document.querySelector('#.canvas');
+  let isDrawing = false;
+  let previousX = null;
+  let previousY = null;
+
+
+  function handleStart(e) {
+    isDrawing = true;
+     // Initiate previousX/previousY
+    let x = e.pageX; // X-coordinate of click/touch
+    let y = e.pageY; // Y-coordinate of click/touch
+    previousX = x;
+    previousY = y;
+
+  }
+
+  function handleEnd() {
+    isDrawing = false;
+  }
+
+  function handleMove(e) {
+    // To prevent drawing on hover
+    if (!isDrawing) {
+      return;
+    }
+
+    let x = e.pageX; // X-coordinate of click/touch
+    let y = e.pageY; // Y-coordinate of click/touch
+
+    // This is canvas specific—we can use the context to draw shapes
+    let ctx = canvas.getContext('2d');
+
+    // Draw a line from previousX/previousY to x/y
+    ctx.beginPath();
+    ctx.moveTo(previousX, previousY);
+    ctx.lineTo(x, y);
+
+    // Set the style of the line
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = '#ff0000';
+    ctx.stroke();
+
+    // Set previous coordinates for next move event
+    previousX = x;
+    previousY = y;
+  }
+
+  canvas.addEventListener("pointerdown", handleStart);
+  canvas.addEventListener("pointerup", handleEnd);
+  canvas.addEventListener("pointercancel", handleEnd);
+  canvas.addEventListener("pointermove", handleMove);
+})();
+
+/* Canvas draw box
+(function() {
+  let canvas = document.querySelector('#canvas');
+  let isDrawing = false;
+  let previousX = null;
+  let previousY = null;
+
+  function handleStart(e) {
+    isDrawing = true;
 
     //Initiate previousX/previousY
     let x = e.pageX; // X-coordinate of click/touch-action
@@ -271,57 +350,41 @@ let pokemonRepository = (function () {
     previousY= y;
   }
 
-    function handleEnd() {
-      isDrawing = false;
+  function handleEnd() {
+    isDrawing = false;
+  }
+
+  function handleMove(e) {
+    // To prevent drawing when hovering
+    if(!isDrawing) {
+      return;
     }
 
-    function handleMove(e) {
-      // To prevent drawing when hovering
-      if(!isDrawing) {
-        return;
-      }
-      let x= e.pageX;
-      let y= e.pageY;
-      //to draw
-      //canvas specific- used to draw shapes
-      let ctx= canvas.getContext('2d');
+    let x= e.pageX;
+    let y= e.pageY;
+    //to draw
+    //canvas specific- used to draw shapes
+    let ctx= canvas.getContext('2d');
 
-      //draw a line from previousX/previousY to x/y
-      ctx.beginPath();
-      ctx.moveTo(previousX, previousY);
-      ctx.lineTo(x, y);
+    //draw a line from previousX/previousY to x/y
+    ctx.beginPath();
+    ctx.moveTo(previousX, previousY);
+    ctx.lineTo(x, y);
 
-      //set line style
-      ctx.lineWidth= 3;
-      ctx.strokeStyle= '#ff0000';
-      ctx.stroke();
+    //set line style
+    ctx.lineWidth= 3;
+    ctx.strokeStyle= '#ff0000';
+    ctx.stroke();
 
-      // set previous coordinates for next move
-      previousX = x;
-      previousY = y;
-    }
+    // set previous coordinates for next move
+    previousX = x;
+    previousY = y;
+  }
 
-    canvas.addEventListener('pointerdown', handleStart);
-    canvas.addEventListener('pointerup', handleEnd);
-    canvas.addEventListener('pointercancel', handleEnd);
-    canvas.addEventListener('pointermove', handleMove);
-
-  });
-  //End
-
-  return {
-    add: add,
-    getAll: getAll,
-    addListItem: addListItem,
-    showDetails: showDetails,
-    loadList: loadList,
-    loadDetails: loadDetails
-  };
+  canvas.addEventListener('pointerdown', handleStart);
+  canvas.addEventListener('pointerup', handleEnd);
+  canvas.addEventListener('pointercancel', handleEnd);
+  canvas.addEventListener('pointermove', handleMove);
 })();
-
-
-  pokemonRepository.loadList().then(function() {
-    pokemonRepository.getAll().forEach(function (pokemon) {
-      pokemonRepository.addListItem(pokemon);
-    });
-  });
+//End
+*/
