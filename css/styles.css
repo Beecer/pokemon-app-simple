@@ -23,6 +23,17 @@
   border-radius: 10px;
   font-weight: bold;
 }
+
+.button-class:hover,
+.button-class:focus,
+  .button:hover,
+  .button:focus{
+  cursor: pointer;
+  color:  #ffd749;
+  background-color: #2873B9;
+  border: 8px solid #ffd749;
+}
+
 html,
 body {
 margin: 20px;
@@ -108,10 +119,12 @@ label {
   display: inline-block;
   box-sizing: border-box;
   background: #fff;
+  border-radius: 15px;
   padding: 25px;
   width: 100%;
   max-width: 700px;
   text-align: left;
+  text-transform: uppercase;
 }
 
 .modal-close {
@@ -130,7 +143,14 @@ label {
 .modal p {
   margin-bottom: 0;
 }
+.modal img {
+  width: 30%;
+  margin:auto;
+  display: block;
 
+
+
+}
 #modal-container {
   display: none;
 }
@@ -141,8 +161,10 @@ label {
 }
 
 canvas {
-  border: solid #000 2px;
+  border: solid #000 1px;
   touch-action: none;
+  background-color: white;
+  border-radius: 5px;
 }
 
 * {
