@@ -280,7 +280,7 @@ pokemonRepository.loadList().then(function() {
 });
 
 (function() {
-  let canvas = document.querySelector('#.canvas');
+  let canvas = document.querySelector('#canvas');
   let isDrawing = false;
   let previousX = null;
   let previousY = null;
