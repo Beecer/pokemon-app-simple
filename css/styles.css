@@ -5,7 +5,7 @@
 --background-color: #9de0ce;/*Sea Green*/
 }
 
-.button-class {
+.button {
   background-color: #ffd749;
   padding: 10px 10px;
   text-align: left;
@@ -24,8 +24,8 @@
   font-weight: bold;
 }
 
-.button-class:hover,
-.button-class:focus,
+.button:hover,
+.button:focus,
   .button:hover,
   .button:focus{
   cursor: pointer;
@@ -93,7 +93,7 @@ label {
   font-size: 0.8em;
 }
 
-#modal-container {
+/*#modal-container {
   position: fixed;
   padding: 20px;
   box-sizing: border-box;
@@ -119,7 +119,7 @@ label {
   display: inline-block;
   box-sizing: border-box;
   background: #fff;
-  border-radius: 15px;
+  border-radius: 35px;
   padding: 25px;
   width: 100%;
   max-width: 700px;
