@@ -7,63 +7,63 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
   </head>
+
   <body>
     <header class="page-header">
-      <!-- add logo here -->
-      <img src="img/269px-International_Pokémon_logo.svg.png" alt="Pokemon logo" class="page-header__logo">
+      <nav class="navbar navbar-light navbar-expand-sm fixed-top" style="background-color: #ffd749;">
+        <a class="navbar-brand" href="#">
+          <!-- add logo here -->
+          <img src="img/269px-International_Pokémon_logo.svg.png" alt="Pokemon logo" class="page-header__logo">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+          </ul>
+        </div>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
     </header>
 
-    <form id='registration-form'>
-      <div class='input-wrapper'>
-        <label for='email'>E-Mail </label>
-        <input id='email'>
-      </div>
-
-      <div class='input-wrapper'>
-        <label for='password'>Password</label>
-        <input id='password' type='password'>
-      </div>
-
-      <button>Register</button>
-    </form>
-    <!--
-    <canvas
-      id="canvas"
-      width="700"
-      height="300"
-    ></canvas>
-  -->
-  <!--  <button id='show-modal'>Show modal</button>
-   <button id='show-dialog'>Show dialog</button>-->
-   <!-- Button trigger modal
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button> -->
+  
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      <!--  <button type="button" class="btn btn-primary">Save changes</button>-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <!--  <button type="button" class="btn btn-primary">Save changes</button>-->
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-    <!--<div id='modal-container'></div>-->
 
     <h1 class="pokemon_list_title">PokeDex</h1>
-    <ul class="pokemon_list d-flex flex-wrap list-unstyled"></ul>
+    <ul class="pokemon_list d-flex flex-wrap list-unstyled" id="listedPokemon"></ul>
 
     <script src="js/promise-polyfill.js"></script>
     <script src="js/fetch-polyfill.js"></script>
